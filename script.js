@@ -1,18 +1,49 @@
-timer = document.getElementById("Timer__totime")
-buttonStart = document.getElementById("organizador-btn__iniciar-btn")
-buttonPause = document.getElementById("organizador-btn__pausa-btn")
-buttonRestart = document.getElementById("organizador-btn__reiniciar-btn")
+const timer = document.getElementById("Timer__totime")
+const buttonStart = document.getElementById("organizador-btn__iniciar-btn")
+const buttonPause = document.getElementById("organizador-btn__pausa-btn")
+const buttonRestart = document.getElementById("organizador-btn__reiniciar-btn")
 
-function initializeApp(){
-    let totalTime = 25;
-    let isPause = false;
-    const actuallySection = null;
-    updateDisplay()
+let minutes = 0;
+let seconds = 10;
+let idForInterval = null;
+
+function pauseTime() {
+    clearInterval(idForInterval);
+    idForInterval = null;
 }
 
-function updateDisplay(){
-    
+function restartTime() {
+    minutes = 1;
+    seconds = 0;
 }
 
-initializeApp()
+function startTime() {
+    if (idForInterval === null) {
+        idForInterval = setInterval(() => {
+            if (minutes === 0 && seconds === 0) {
+                pauseTime();
+            } else {
+                if (seconds === 0) {
+                    minutes--;
+                    seconds = 60;
+                } else {
+                    seconds--;
+                }
+            } updateDisplay(minutes, seconds)
+        }, 1000)
+    }
+}
+
+function updateDisplay(minutes, seconds) {
+    if (seconds < 10) {
+        timer.innerText = `${minutes}:0${seconds}`
+    } else {
+        timer.innerText = `${minutes}:${seconds}`
+    }
+}
+buttonPause.addEventListener('click', pauseTime);
+buttonStart.addEventListener('click', startTime);
+buttonRestart.addEventListener('click', restartTime);
+startTime();
+
 
