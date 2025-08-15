@@ -6,12 +6,15 @@
 :root{
     --primary-color: aliceblue;
     --background-color:#3a3f50;
+    --second-color:#95C6B2;
+    --second-background-color:#F7A072;
 }
 body{
     display: flex;
     justify-content: center;
     margin: auto;
-    background-color: var(--background-color);
+    height: 100vh;
+    background-color: #96A1B1;
 }
 #Container{
     display: flex;
@@ -42,6 +45,14 @@ body{
     color: var(--primary-color);
 }
 
+/* #Timer__totime.break-mode{
+    color: var(--second-color);
+} */
+
+.break-mode--brackground{
+    background-color: var(--second-background-color);
+}
+
 .organizador-btn{
     display: flex;    
     justify-content: space-evenly;    
@@ -62,6 +73,38 @@ body{
 
 .btn:hover{
     color: gray;
-    transform: scale(1.1);;
+    transform: scale(1.1);
     transition: 0.2 ease-in-out;
+}
+/* REFAZER TODAS AS CORES E TALVEZ A ANIMACAO 
+FAZER COM QUE A CLASSE TO-WORK JA INICIE COM O APP*/
+@keyframes transition-to-break {
+    0% {
+       background-position: 0% 200%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+@keyframes transition-to-work {
+    0% {
+        background-position: 0% -200%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+.animating-to-break{ 
+    background-image: linear-gradient(to top, var(--background-color), #96A1B1);
+    background-size: 100% 200%;
+    background-repeat: no-repeat;
+    animation: transition-to-break .1s ease-in-out forwards;
+}
+
+.animating-to-work{
+    background-image: linear-gradient( to bottom, #96A1B1, var(--background-color));
+    background-size: 100% 200%;
+    background-repeat: no-repeat;
+    animation: transition-to-work 1s ease-in-out forwards;
 }
