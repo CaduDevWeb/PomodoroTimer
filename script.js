@@ -4,34 +4,49 @@ const buttonPause = document.getElementById("organizador-btn__pausa-btn");
 const buttonRestart = document.getElementById("organizador-btn__reiniciar-btn");
 const bodyElement = document.body;
 
-let minutes = 0;
-let seconds = 10;
+let minutes = 25;
+let seconds = 0;
 let idForInterval = null;
-let cont = 0;
-const timeline = [25, 1, 25, 5, 25, 5, 25, 30];
+let pomodorosCompleted = 0;
+let isBreak = false;
+
 function pauseTime() {
     clearInterval(idForInterval);
     idForInterval = null;
 }
-
+// refazer o restart
 function restartTime() {
-    minutes = 0
-    seconds = 1
+    
 }
-function breackTime() {
-    cont ++
-    minutes = timeline[cont];
-    if(cont > timeline.length){
-        cont = 0;
-        minutes = timeline[cont];
+
+function onTimerEnd() {
+    if(isBreak === true){
+        isBreak = false;
+        minutes = 25;
+        //seconds = 5; PARA TESTE
+        changeColorAnimation();
+    }else{
+        if(pomodorosCompleted >= 4){
+            isBreak = true;
+            minutes = 30;
+            pomodorosCompleted = 0;
+            changeColorAnimation();
+        }else{
+            isBreak = true;
+            minutes = 5;
+            //seconds = 5; PARA TESTE
+            pomodorosCompleted++
+            changeColorAnimation();
+        }
     }
 
-    if(minutes === 1){
-        //timer.classList.add('break-mode');
+}
+
+function changeColorAnimation(){
+    if(isBreak === true){
         bodyElement.classList.remove('animating-to-work');
         bodyElement.classList.add('animating-to-break');
     }else{
-        //timer.classList.remove('break-mode');
         bodyElement.classList.remove('animating-to-break');
         bodyElement.classList.add('animating-to-work');
     }
@@ -41,17 +56,18 @@ function startTime() {
     if (idForInterval === null) {
         idForInterval = setInterval(() => {
             if (minutes === 0 && seconds === 0) {
-                breackTime();
+                onTimerEnd()
             } else {
                 if (seconds === 0) {
                     minutes--;
-                    seconds = 60;
+                    seconds = 59;
                 } else {
                     seconds--;
                 }
             } updateDisplay(minutes, seconds)
         }, 1000)
     }
+    bodyElement.classList.add('animating-to-work');
 }
 
 function updateDisplay(minutes, seconds) {
