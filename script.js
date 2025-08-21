@@ -14,7 +14,7 @@ function pauseTime() {
     clearInterval(idForInterval);
     idForInterval = null;
 }
-// refazer o restart
+
 function restartTime() {
     pomodorosCompleted = 0;
     isBreak = true;
