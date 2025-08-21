@@ -16,13 +16,16 @@ function pauseTime() {
 }
 // refazer o restart
 function restartTime() {
-    
+    pomodorosCompleted = 0;
+    isBreak = true;
+    onTimerEnd();
 }
 
 function onTimerEnd() {
     if(isBreak === true){
         isBreak = false;
         minutes = 25;
+        seconds = 0;
         //seconds = 5; PARA TESTE
         changeColorAnimation();
     }else{
